@@ -10,6 +10,7 @@ class ArticlesController < ApplicationController
   # GET /articles/1
   # GET /articles/1.json
   def show
+   @article = Article.find(params[:id])
   end
 
   # GET /articles/new
@@ -19,6 +20,7 @@ class ArticlesController < ApplicationController
 
   # GET /articles/1/edit
   def edit
+    @article = Article.find(params[:id])
   end
 
   # POST /articles
@@ -27,13 +29,15 @@ class ArticlesController < ApplicationController
     #render plain: params[:article].inspect
     @article = Article.new(article_params)
    # @article.save
-   # redirect_to articles_show(@article)
-
+   
     respond_to do |format|
       if @article.save
+        #flash[:notice] = "Article was successfully created"
+        # redirect_to article_path(@article)
         format.html { redirect_to @article, notice: 'Article was successfully created.' }
         format.json { render :show, status: :created, location: @article }
       else
+       # render 'new'
         format.html { render :new }
         format.json { render json: @article.errors, status: :unprocessable_entity }
       end
@@ -43,6 +47,12 @@ class ArticlesController < ApplicationController
   # PATCH/PUT /articles/1
   # PATCH/PUT /articles/1.json
   def update
+   # @article = Article.find(params[:id])
+   # if @article.update(article_params)
+   #   flash[:notice] = " Article was successfully updated"
+   #   redirect_to article_path(@article)
+   # else 
+   #   render 'edit'
     respond_to do |format|
       if @article.update(article_params)
         format.html { redirect_to @article, notice: 'Article was successfully updated.' }
