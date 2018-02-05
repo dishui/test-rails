@@ -24,7 +24,10 @@ class ArticlesController < ApplicationController
   # POST /articles
   # POST /articles.json
   def create
+    #render plain: params[:article].inspect
     @article = Article.new(article_params)
+   # @article.save
+   # redirect_to articles_show(@article)
 
     respond_to do |format|
       if @article.save
